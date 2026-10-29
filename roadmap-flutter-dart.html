@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Roadmap Flutter &amp; Dart — le chemin complet</title>
+<meta name="description" content="Parcours d'apprentissage Flutter et Dart en français : définitions techniques, chaîne d'apprentissage en 7 étapes, ressources et jalons." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --bg:#f7f5f0;
+    --card:#ffffff;
+    --line:#e9e3d6;
+    --line-soft:#f0ebe0;
+    --ink:#14171e;
+    --ink-2:#3a4256;
+    --muted:#7c7a72;
+    --primary:#0b5cab;
+    --primary-2:#1a73c4;
+    --primary-soft:rgba(11,92,171,.09);
+    --warm:#d97941;
+    --warm-soft:rgba(217,121,65,.10);
+    --shadow-sm:0 2px 8px rgba(0,0,0,.04);
+    --shadow-md:0 4px 16px -2px rgba(0,0,0,.07);
+    --shadow-lg:0 12px 32px -10px rgba(11,92,171,.22);
+    --ease:cubic-bezier(.22,.72,.24,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:28px}
+  body{
+    margin:0;background:var(--bg);color:var(--ink-2);
+    font-family:'Outfit',system-ui,'Segoe UI',sans-serif;
+    font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px 100px}
+  @media (min-width:768px){ .wrap{padding:0 40px 120px} }
+
+  /* ---------- Scroll progress ---------- */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:100%;
+    background:transparent;z-index:60;pointer-events:none;
+  }
+  #progress i{
+    display:block;height:100%;width:0%;
+    background:linear-gradient(90deg,var(--primary),var(--primary-2));
+    transition:width .1s linear;
+  }
+
+  /* ---------- Reveal ---------- */
+  .js .reveal{
+    opacity:0;transform:translateY(22px);
+    transition:opacity .72s var(--ease),transform .72s var(--ease);
+    transition-delay:var(--d,0ms);
+    will-change:opacity,transform;
+  }
+  .js .reveal.in{opacity:1;transform:none}
+  .js .reveal-left{transform:translateX(-24px)}
+  .js .reveal-left.in{transform:none}
+  .js .reveal-scale{transform:scale(.965)}
+  .js .reveal-scale.in{transform:none}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .js .reveal,.js .reveal-left,.js .reveal-scale{opacity:1!important;transform:none!important;transition:none!important}
+    #progress i{transition:none}
+    .drift-a,.drift-b{animation:none!important}
+  }
+
+  /* ---------- Hero ---------- */
+  header.hero{padding:70px 0 36px;position:relative;overflow:hidden}
+  header.hero::before,header.hero::after{
+    content:"";position:absolute;border-radius:50%;pointer-events:none;z-index:-1;
+  }
+  header.hero::before{
+    width:560px;height:560px;top:-240px;right:-180px;
+    background:radial-gradient(circle,rgba(26,115,196,.10),transparent 68%);
+    animation:drift-a 22s ease-in-out infinite alternate;
+  }
+  header.hero::after{
+    width:460px;height:460px;bottom:-220px;left:-160px;
+    background:radial-gradient(circle,rgba(217,121,65,.09),transparent 68%);
+    animation:drift-b 26s ease-in-out infinite alternate;
+  }
+  @keyframes drift-a{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-40px,34px,0) scale(1.12)}}
+  @keyframes drift-b{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(46px,-30px,0) scale(1.1)}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--primary);background:var(--primary-soft);
+    padding:6px 12px;border-radius:999px;margin-bottom:22px;
+  }
+  h1{
+    font-family:'DM Serif Display',Georgia,serif;font-weight:400;
+    font-size:clamp(2.05rem,5.2vw,3.3rem);line-height:1.08;letter-spacing:-.01em;
+    color:var(--ink);margin:0 0 18px;max-width:20ch;
+  }
+  .lede{font-size:1.12rem;max-width:64ch;color:var(--ink-2);margin:0 0 28px}
+  .hero-meta{
+    display:flex;flex-wrap:wrap;gap:10px;padding-top:22px;border-top:1px solid var(--line);
+  }
+  .hero-meta span{
+    font-size:13.5px;color:var(--muted);display:inline-flex;align-items:center;gap:7px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;
+    transition:border-color .2s ease,transform .2s ease;
+  }
+  .hero-meta span:hover{border-color:var(--primary);transform:translateY(-1px)}
+  .hero-meta span svg{width:15px;height:15px;color:var(--primary);flex:none}
+
+  /* ---------- Sections ---------- */
+  section{margin-top:76px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-head h2{
+    font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:1.85rem;
+    color:var(--ink);margin:0;letter-spacing:-.005em;
+  }
+  .sec-head .num{
+    font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--primary);
+    background:var(--primary-soft);padding:4px 9px;border-radius:6px;white-space:nowrap;
+  }
+  .sec-sub{color:var(--muted);font-size:.98rem;max-width:68ch;margin:0 0 30px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 28px;box-shadow:var(--shadow-sm);
+  }
+
+  /* ---------- Figure ---------- */
+  figure{margin:0}
+  figcaption{color:var(--muted);font-size:.9rem;margin-top:14px;text-align:center}
+  .fig-box{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 20px;
+    box-shadow:var(--shadow-sm);
+  }
+  .fig-box svg{width:100%;height:auto;display:block}
+
+  /* ---------- KV ---------- */
+  .kv{display:grid;grid-template-columns:190px 1fr;margin:0}
+  .kv dt{
+    color:var(--muted);font-size:.9rem;border-bottom:1px dashed var(--line);padding:13px 0;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .kv dd{margin:0;border-bottom:1px dashed var(--line);padding:13px 0;color:var(--ink);font-size:.97rem}
+  .kv dt:last-of-type,.kv dd:last-of-type{border-bottom:none}
+  @media (max-width:600px){ .kv{grid-template-columns:1fr} .kv dt{padding-bottom:0;border-bottom:none} .kv dd{padding-top:4px} }
+
+  /* ---------- Table ---------- */
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:var(--shadow-sm)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:.93rem}
+  thead th{
+    text-align:left;font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);
+    padding:16px 20px;border-bottom:1px solid var(--line);font-weight:600;background:var(--bg);
+  }
+  tbody td{padding:15px 20px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-2)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody td:first-child{color:var(--ink);font-weight:500}
+  tbody a{color:var(--primary);text-decoration:none;border-bottom:1px solid rgba(11,92,171,.3)}
+  tbody a:hover{border-bottom-color:var(--primary)}
+  .badge{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.05em;
+    text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap;
+    background:var(--primary-soft);color:var(--primary);
+  }
+  .badge.warm{background:var(--warm-soft);color:var(--warm)}
+
+  /* ---------- Timeline ---------- */
+  .timeline{list-style:none;padding:0;margin:0;position:relative}
+  .timeline::before{
+    content:"";position:absolute;left:13px;top:14px;bottom:14px;width:2px;
+    background:linear-gradient(180deg,var(--primary),var(--primary-2));
+    opacity:.3;transform-origin:top;transform:scaleY(0);
+    transition:transform 1.5s var(--ease);
+  }
+  .timeline.in::before{transform:scaleY(1)}
+  .timeline > li{position:relative;padding:0 0 26px 48px}
+  .timeline > li::before{
+    content:"";position:absolute;left:5px;top:22px;width:18px;height:18px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--primary);
+    transition:background .3s ease,box-shadow .3s ease;
+  }
+  .timeline > li:hover::before{background:var(--primary);box-shadow:0 0 0 5px var(--primary-soft)}
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px 22px;
+    box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+  }
+  .step:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+  .step-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+  .step-head h3{
+    font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:1.3rem;
+    color:var(--ink);margin:0;line-height:1.25;flex:1 1 250px;
+  }
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:.72rem;
+    color:var(--primary);background:var(--primary-soft);border-radius:999px;padding:4px 11px;white-space:nowrap;
+  }
+  .step p{margin:0 0 14px}
+  .goals{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:7px}
+  .goals li{position:relative;padding-left:24px;font-size:.96rem}
+  .goals li::before{
+    content:"";position:absolute;left:4px;top:9px;width:7px;height:7px;border-radius:50%;
+    background:var(--primary);opacity:.45;
+  }
+  .res-label{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px}
+  .res{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 16px}
+  .res a{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    background:var(--bg);border:1px solid var(--line);border-radius:10px;
+    padding:8px 13px;font-size:.9rem;color:var(--ink);
+    transition:border-color .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease;
+  }
+  .res a:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+  .res a svg{width:15px;height:15px;flex:none;color:var(--primary)}
+  .res a .tag{
+    font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:5px;padding:2px 6px;
+  }
+  .jalon{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--primary-soft);border-radius:12px;padding:13px 16px;
+  }
+  .jalon svg{width:18px;height:18px;color:var(--primary);flex:none;margin-top:2px}
+  .jalon p{margin:0;font-size:.93rem;color:var(--ink)}
+  .jalon strong{color:var(--primary);font-weight:600}
+
+  /* ---------- Glossary ---------- */
+  .gloss{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+  .g{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s ease;
+  }
+  .g:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:rgba(11,92,171,.35)}
+  .g dt{
+    font-family:'JetBrains Mono',monospace;font-size:.86rem;color:var(--primary);
+    margin:0 0 7px;display:flex;align-items:center;gap:8px;
+  }
+  .g dt::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--primary);flex:none}
+  .g dd{margin:0;font-size:.92rem;color:var(--ink-2)}
+
+  /* ---------- Pitfalls ---------- */
+  .pit-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .pit{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;
+    box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+  }
+  .pit:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+  .pit h4{
+    margin:0 0 8px;font-size:1rem;color:var(--ink);font-weight:600;
+    display:flex;align-items:center;gap:9px;
+  }
+  .pit h4 svg{width:17px;height:17px;color:var(--warm);flex:none}
+  .pit p{margin:0;font-size:.9rem;color:var(--muted)}
+
+  /* ---------- Project ---------- */
+  .proj{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .proj-card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;
+    box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+  }
+  .proj-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+  .proj-card .n{
+    font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--primary);
+    background:var(--primary-soft);padding:3px 9px;border-radius:5px;display:inline-block;margin-bottom:12px;
+  }
+  .proj-card h4{margin:0 0 8px;font-size:1rem;color:var(--ink);font-weight:600}
+  .proj-card p{margin:0;font-size:.9rem;color:var(--muted)}
+
+  /* ---------- Decision ---------- */
+  .decision{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .dec{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;
+    box-shadow:var(--shadow-sm);position:relative;overflow:hidden;
+  }
+  .dec::after{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--primary);opacity:.75;
+  }
+  .dec.warm::after{background:var(--warm)}
+  .dec h3{margin:0 0 10px;font-size:1.05rem;color:var(--ink);font-weight:600}
+  .dec p{margin:0 0 12px;font-size:.93rem;color:var(--ink-2)}
+  .dec ul{margin:0;padding-left:20px;font-size:.9rem;color:var(--muted)}
+  .dec li{margin-bottom:5px}
+
+  /* ---------- TOC ---------- */
+  .toc{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+  .toc a{
+    display:flex;align-items:baseline;gap:12px;text-decoration:none;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+    transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s ease;
+  }
+  .toc a:hover{transform:translateX(5px);border-color:var(--primary);box-shadow:var(--shadow-sm)}
+  .toc a .n{
+    font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--primary);
+    background:var(--primary-soft);padding:3px 8px;border-radius:5px;flex:none;
+  }
+  .toc a .t{font-size:.95rem;color:var(--ink);line-height:1.35}
+  .toc a:hover .t{color:var(--primary)}
+
+  /* ---------- Note ---------- */
+  .note{
+    background:var(--warm-soft);border-radius:12px;padding:15px 18px;display:flex;gap:12px;
+    align-items:flex-start;margin-top:22px;
+  }
+  .note svg{width:18px;height:18px;color:var(--warm);flex:none;margin-top:2px}
+  .note p{margin:0;font-size:.91rem;color:var(--ink-2)}
+  .note a{color:var(--primary)}
+
+  /* ---------- Back to top ---------- */
+  #top{
+    position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;
+    background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-md);
+    display:grid;place-items:center;cursor:pointer;z-index:50;
+    opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;
+    transition:opacity .3s ease,transform .3s var(--ease),border-color .2s ease;
+  }
+  #top.show{opacity:1;transform:none;pointer-events:auto}
+  #top:hover{border-color:var(--primary)}
+  #top svg{width:18px;height:18px;color:var(--primary)}
+
+  code{
+    font-family:'JetBrains Mono',monospace;font-size:.87em;
+    background:var(--line-soft);padding:2px 6px;border-radius:5px;color:var(--ink);
+  }
+  .pre{
+    background:#17203a;color:#e6ebf5;border-radius:14px;padding:20px 22px;
+    font-family:'JetBrains Mono',monospace;font-size:.84rem;line-height:1.75;
+    overflow-x:auto;margin:0 0 16px;box-shadow:var(--shadow-sm);
+  }
+  .pre .c{color:#7f90b3}
+  .pre .k{color:#8fd0ff}
+  .pre .s{color:#a8e6a1}
+  .pre .t{color:#f3c98b}
+
+  footer{
+    margin-top:80px;padding-top:26px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:.87rem;
+  }
+  footer ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+  footer a{color:var(--primary);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  footer li{padding-left:16px;position:relative}
+  footer li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--primary);opacity:.5}
+
+  @media (max-width:560px){
+    body{font-size:15.5px}
+    .card,.step{padding:20px 18px}
+    .timeline > li{padding-left:38px}
+    .timeline::before{left:9px}
+    .timeline > li::before{left:1px;width:16px;height:16px}
+    .fig-box{padding:16px 10px}
+    #top{right:14px;bottom:14px;width:40px;height:40px}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress" aria-hidden="true"><i></i></div>
+
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <span class="eyebrow reveal" style="--d:0ms">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+      Roadmap Flutter &amp; Dart
+    </span>
+    <h1 class="reveal" style="--d:80ms">Le chemin pour maîtriser Flutter.</h1>
+    <p class="lede reveal" style="--d:160ms">
+      Sept étapes, du langage Dart au déploiement d'une application en production.
+      Chaque notion est <strong>définie simplement</strong>, puis rattachée à une ressource
+      officielle ou francophone. Le tout est à jour pour <strong>Flutter 3.47</strong> et
+      <strong>Dart 3.13</strong>.
+    </p>
+    <div class="hero-meta reveal" style="--d:240ms">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> ~10 à 14 semaines · ~250 h</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 4 4M17 7l-1.5 1.5"/><circle cx="11.5" cy="11.5" r="8"/></svg> 22 termes définis</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 7 jalons concrets</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg> Ressources FR + EN</span>
+    </div>
+  </header>
+
+  <!-- ================= SOMMAIRE ================= -->
+  <section id="sommaire">
+    <div class="sec-head reveal"><span class="num">00</span><h2>Sommaire</h2></div>
+    <p class="sec-sub reveal">Dix sections, de la version stable du framework jusqu'à la checklist de validation.</p>
+    <nav class="toc reveal">
+      <a href="#flutter-60s"><span class="n">01</span><span class="t">Flutter en 60 secondes</span></a>
+      <a href="#modele-mental"><span class="n">02</span><span class="t">Le modèle mental : du code aux pixels</span></a>
+      <a href="#definitions"><span class="n">03</span><span class="t">Les 22 définitions techniques</span></a>
+      <a href="#chaine"><span class="n">04</span><span class="t">La chaîne en 7 étapes</span></a>
+      <a href="#dart-ou-flutter"><span class="n">05</span><span class="t">Dart d'abord, ou Flutter d'abord ?</span></a>
+      <a href="#gestion-etat"><span class="n">06</span><span class="t">Provider, Riverpod ou BLoC ?</span></a>
+      <a href="#projets"><span class="n">07</span><span class="t">Les projets fil rouge</span></a>
+      <a href="#pieges"><span class="n">08</span><span class="t">Les six pièges du débutant</span></a>
+      <a href="#memo"><span class="n">09</span><span class="t">Mémo des commandes</span></a>
+      <a href="#checklist"><span class="n">10</span><span class="t">Checklist de validation</span></a>
+    </nav>
+  </section>
+
+  <!-- ================= 01 — EN 60 SECONDES ================= -->
+  <section id="flutter-60s">
+    <div class="sec-head reveal"><span class="num">01</span><h2>Flutter en 60 secondes</h2></div>
+    <p class="sec-sub reveal">
+      Flutter est le framework UI open source de Google. Il ne dessine pas des composants
+      natifs : <strong>il dessine lui-même chaque pixel</strong>. C'est la clé de tout le reste.
+    </p>
+
+    <div class="card reveal reveal-scale">
+      <dl class="kv">
+        <dt>Version stable</dt>
+        <dd><strong>Flutter 3.47.8</strong> (23 oct. 2026) · canal <code>stable</code> — embarque <strong>Dart 3.13.7</strong></dd>
+        <dt>Langage</dt>
+        <dd>Dart — typé statiquement, null safety par défaut, compilation native AOT et web via JS/Wasm</dd>
+        <dt>Rendu</dt>
+        <dd><strong>Impeller</strong> — devenu le moteur par défaut sur macOS, Windows et Linux. Rendu GPU direct, pas de<i>shaders</i> Skia</dd>
+        <dt>Plateformes</dt>
+        <dd>Android · iOS · Web · Windows · macOS · Linux — <strong>une seule base de code</strong></dd>
+        <dt>Hot Reload</dt>
+        <dd>Injection de code à chaud en <strong>&lt; 1 seconde</strong> : le state est conservé, l'UI se redessine seule</dd>
+        <dt>Paquets</dt>
+        <dd><a href="https://pub.dev" target="_blank" rel="noopener">pub.dev</a> — le registre officiel de packages, intégré à la CLI (<code>flutter pub add</code>)</dd>
+        <dt>Code natif</dt>
+        <dd>Le <i>hot reload</i> ne marche qu'avec du code Dart. Un plugin natif (Swift/Kotlin) impose un rebuild complet</dd>
+      </dl>
+    </div>
+
+    <div class="note reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p><strong>Flutter ≠ React Native.</strong> React Native affiche des composants <i>natifs</i> de la plateforme ;
+      Flutter <strong>peint lui-même</strong> l'interface. D'où une rendu identique partout,
+      des animations plus fluides, et un « look » qui n'est ni iOS ni Android tant que tu ne l'imposes pas.</p>
+    </div>
+
+    <div class="tbl-wrap reveal" style="margin-top:26px">
+      <table>
+        <thead>
+          <tr><th>Critère</th><th>Flutter</th><th>React Native</th><th>Native (Swift / Kotlin)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Rendu</td><td>Le framework dessine tout</td><td>Wrapper autour de vues natives</td><td>100 % natif</td></tr>
+          <tr><td>Rendu visuel identique iOS/Android</td><td>Oui, par défaut</td><td>Non</td><td>Non</td></tr>
+          <tr><td>Performance (scrolling, 60/120 fps)</td><td>Très bonne</td><td>Correcte</td><td>Maximale</td></tr>
+          <tr><td>Accès au natif (capteurs, NFC…)</td><td>Via plugins</td><td>Via modules</td><td>Direct</td></tr>
+          <tr><td>Temps d'apprentissage</td><td>Modéré</td><td>Modéré</td><td>Élevé (2 langages)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 02 — MODÈLE MENTAL ================= -->
+  <section id="modele-mental">
+    <div class="sec-head reveal"><span class="num">02</span><h2>Le modèle mental : de ton code aux pixels</h2></div>
+    <p class="sec-sub reveal">
+      Flutter a <strong>trois arbres</strong> en parallèle. Les comprendre, c'est comprendre
+      pourquoi Flutter est rapide, et pourquoi un <code>setState</code> peut reconstruire toute l'interface.
+    </p>
+
+    <figure class="reveal reveal-scale">
+      <div class="fig-box">
+        <svg viewBox="0 0 700 500" role="img" aria-label="Pipeline de rendu Flutter : du code Dart au widget, à l'element, au render object, à la layer, puis aux pixels, avec la boucle de rebuild en setState.">
+          <defs>
+            <marker id="fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="#0b5cab"/>
+            </marker>
+            <marker id="fw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="#d97941"/>
+            </marker>
+          </defs>
+
+          <!-- code -->
+          <rect x="20" y="8" width="330" height="48" rx="10" fill="#17203a"/>
+          <text x="38" y="30" font-family="JetBrains Mono,monospace" font-size="13" fill="#8fd0ff">build(BuildContext context)</text>
+          <text x="38" y="47" font-family="JetBrains Mono,monospace" font-size="13" fill="#a8e6a1">  =&gt; Text('Bonjour')</text>
+          <line x1="185" y1="56" x2="185" y2="78" stroke="#0b5cab" stroke-width="2" marker-end="url(#fa)"/>
+
+          <!-- widget -->
+          <rect x="20" y="80" width="330" height="56" rx="10" fill="#ffffff" stroke="#e9e3d6" stroke-width="1"/>
+          <text x="38" y="103" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#14171e">Widget</text>
+          <text x="38" y="122" font-family="Outfit,sans-serif" font-size="12.5" fill="#7c7a72">Description immuable de l'UI</text>
+          <line x1="185" y1="136" x2="185" y2="158" stroke="#0b5cab" stroke-width="2" marker-end="url(#fa)"/>
+
+          <!-- element -->
+          <rect x="20" y="160" width="330" height="56" rx="10" fill="#ffffff" stroke="#e9e3d6" stroke-width="1"/>
+          <text x="38" y="183" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#14171e">Element</text>
+          <text x="38" y="202" font-family="Outfit,sans-serif" font-size="12.5" fill="#7c7a72">Identité + cycle de vie</text>
+          <line x1="185" y1="216" x2="185" y2="238" stroke="#0b5cab" stroke-width="2" marker-end="url(#fa)"/>
+
+          <!-- renderobject -->
+          <rect x="20" y="240" width="330" height="56" rx="10" fill="#ffffff" stroke="#e9e3d6" stroke-width="1"/>
+          <text x="38" y="263" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#14171e">RenderObject</text>
+          <text x="38" y="282" font-family="Outfit,sans-serif" font-size="12.5" fill="#7c7a72">Mise en page + peinture</text>
+          <line x1="185" y1="296" x2="185" y2="318" stroke="#0b5cab" stroke-width="2" marker-end="url(#fa)"/>
+
+          <!-- layer -->
+          <rect x="20" y="320" width="330" height="56" rx="10" fill="#ffffff" stroke="#e9e3d6" stroke-width="1"/>
+          <text x="38" y="343" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#14171e">Layer / Scene</text>
+          <text x="38" y="362" font-family="Outfit,sans-serif" font-size="12.5" fill="#7c7a72">Composition, GPU</text>
+          <line x1="185" y1="376" x2="185" y2="398" stroke="#0b5cab" stroke-width="2" marker-end="url(#fa)"/>
+
+          <!-- pixels -->
+          <rect x="20" y="400" width="330" height="48" rx="10" fill="#0b5cab"/>
+          <text x="38" y="430" font-family="Outfit,sans-serif" font-size="15" font-weight="600" fill="#ffffff">Pixels à l'écran</text>
+
+          <!-- colonne annotations -->
+          <text x="400" y="105" font-family="Outfit,sans-serif" font-size="13.5" font-weight="600" fill="#14171e">Ce que tu écris</text>
+          <text x="400" y="125" font-family="Outfit,sans-serif" font-size="12.5" fill="#3a4256">Un widget = une valeur.</text>
+          <text x="400" y="143" font-family="Outfit,sans-serif" font-size="12.5" fill="#3a4256">Changer l'UI = en créer un autre.</text>
+
+          <text x="400" y="185" font-family="Outfit,sans-serif" font-size="13.5" font-weight="600" fill="#14171e">Le pont</text>
+          <text x="400" y="205" font-family="Outfit,sans-serif" font-size="12.5" fill="#3a4256">Maintient l'état entre deux</text>
+          <text x="400" y="223" font-family="Outfit,sans-serif" font-size="12.5" fill="#3a4256">build(). Clé d'égalité.</text>
+
+          <text x="400" y="265" font-family="Outfit,sans-serif" font-size="13.5" font-weight="600" fill="#14171e">La géométrie</text>
+          <text x="400" y="285" font-family="Outfit,sans-serif" font-size="12.5" fill="#3a4256">Constraints → Size.</text>
+          <text x="400" y="303" font-family="Outfit,sans-serif" font-size="12.5" fill="#3a4256">Seul lui sait dessiner.</text>
+
+          <!-- boucle rebuild -->
+          <rect x="20" y="132" width="330" height="176" rx="12" fill="none" stroke="#d97941" stroke-width="1.6" stroke-dasharray="6 5"/>
+          <text x="185" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#d97941">setState() → rebuild → repaint</text>
+          <path d="M368 220 L378 220" stroke="#d97941" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#fw)"/>
+
+          <!-- legende -->
+          <text x="400" y="345" font-family="Outfit,sans-serif" font-size="13.5" font-weight="600" fill="#14171e">Impeller</text>
+          <text x="400" y="365" font-family="Outfit,sans-serif" font-size="12.5" fill="#3a4256">Compile les shaders</text>
+          <text x="400" y="383" font-family="Outfit,sans-serif" font-size="12.5" fill="#3a4256">pour le GPU.</text>
+        </svg>
+      </div>
+      <figcaption>Le pipeline de rendu Flutter — et la boucle de reconstruction déclenchée par <code>setState()</code>.</figcaption>
+    </figure>
+
+    <div class="note reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p><strong>Le point crucial :</strong> un widget est <strong>immuable</strong>. Tu ne modifies
+      jamais un widget — tu en crées un nouveau. Flutter compare l'ancien et le nouveau
+      <i>element</i> pour décider quoi repeindre. C'est pour ça que « changer une variable »
+      en Dart ne change <strong>rien</strong> à l'écran : il faut passer par <code>setState()</code>,
+      <code>ValueNotifier</code> ou un gestionnaire d'état.</p>
+    </div>
+  </section>
+
+  <!-- ================= 03 — GLOSSAIRE ================= -->
+  <section id="definitions">
+    <div class="sec-head reveal"><span class="num">03</span><h2>Les définitions techniques</h2></div>
+    <p class="sec-sub reveal">
+      Le vocabulaire Flutter est trompeur : « state », « widget », « rebuild » ne veulent pas
+      dire ce que tu crois. Voici les 22 termes qu'il faut maîtriser, définis une fois pour toutes.
+    </p>
+
+    <dl class="gloss">
+      <div class="g reveal"><dt>Widget</dt><dd>Une <strong>description immuable</strong> d'une partie de l'interface. C'est une simple classe Dart : pas de méthode, pas de référence mutable. « En Dart, on n'écrit pas des widgets, on écrit des <i>descriptions</i> de widgets. »</dd></div>
+      <div class="g reveal" style="--d:60ms"><dt>StatelessWidget</dt><dd>Un widget dont l'UI ne dépend d'aucun état mutable. Il se reconstruit à l'identique tant que son parent ne change pas. Exemple : un titre, une icône, une carte statique.</dd></div>
+      <div class="g reveal" style="--d:120ms"><dt>StatefulWidget</dt><dd>Un widget qui possède un objet <code>State</code> séparé. C'est lui qui survit aux reconstructions et qui déclenche les changements d'UI.</dd></div>
+      <div class="g reveal" style="--d:180ms"><dt>State</dt><dd>L'objet qui contient les données <strong>variables</strong> d'un <code>StatefulWidget</code>. Il est conservé par l'<i>element</i> tant que le widget garde la même identité (même type + même <code>Key</code>).</dd></div>
+      <div class="g reveal" style="--d:240ms"><dt>setState</dt><dd>La méthode qui <strong>marque l'UI comme sale</strong> et demande une reconstruction. À appeler uniquement depuis le <code>State</code>. Elle est asynchrone : le rendu a lieu au prochain frame.</dd></div>
+      <div class="g reveal" style="--d:300ms"><dt>BuildContext</dt><dd>Le <strong>pointeur vers l'element</strong> d'un widget dans l'arbre. Il sert à retrouver un thème, un provider, une route, une MediaQuery. Il est invalide si utilisé après le démontage du widget.</dd></div>
+      <div class="g reveal" style="--d:360ms"><dt>Element</dt><dd>Le pont entre le <i>widget</i> et le <i>render object</i>. Il porte l'<strong>identité</strong> (position + <code>Key</code>) et le cycle de vie (montage, activation, désactivation, démontage).</dd></div>
+      <div class="g reveal" style="--d:420ms"><dt>RenderObject</dt><dd>L'objet qui connaît la <strong> taille, la position et la peinture</strong> d'un widget. Il fait le layout et le paint. Il ne connaît rien au Dart métier.</dd></div>
+      <div class="g reveal" style="--d:480ms"><dt>Constraints</dt><dd>Les <strong>bornes</strong> imposées à un widget par son parent (largeur min/max, hauteur min/max). Combinées aux <i>size</i> de l'enfant, elles produisent la taille finale.</dd></div>
+      <div class="g reveal" style="--d:540ms"><dt>Layout</dt><dd>La phase où Flutter calcule la taille et la position de chaque render object. <code>RenderBox.performLayout</code> en est le cœur.</dd></div>
+      <div class="g reveal" style="--d:600ms"><dt>Key</dt><dd>Un identifiant unique pour un widget dans son parent. Il permet à Flutter de <strong>réutiliser le State</strong> quand la liste est réordonnée, au lieu de tout reconstruire. Deux types : <code>ValueKey</code> et <code>ObjectKey</code>.</dd></div>
+      <div class="g reveal" style="--d:660ms"><dt>Sliver</dt><dd>Un widget de liste qui construit ses enfants <strong>à la demande</strong> selon le scroll. <code>ListView.builder</code> n'en crée que quelques-uns, pas 10 000.</dd></div>
+      <div class="g reveal" style="--d:720ms"><dt>InheritedWidget</dt><dd>Un widget qui transmet une donnée à ses descendants sans les reconstruire. C'est le mécanisme historique sur lequel repose <code>Theme</code>, <code>MediaQuery</code> et le package <code>provider</code>.</dd></div>
+      <div class="g reveal" style="--d:780ms"><dt>Navigator</dt><dd>Le gestionnaire de <strong>routes</strong> : il empile les écrans (pages) et gère le retour arrière. <code>Navigator.push</code> / <code>pop</code>. Depuis peu, <code>go_router</code> est préféré pour les apps sérieuses.</dd></div>
+      <div class="g reveal" style="--d:840ms"><dt>Route</dt><dd>Une page de l'application, avec sa propre <code>NavigatorState</code>. Elle peut être empilée, remplacée ou utilisée comme <i>dialogue</i>.</dd></div>
+      <div class="g reveal" style="--d:900ms"><dt>Hot Reload</dt><dd>Injection du code modifié dans le <strong>Dart VM</strong> en cours d'exécution. L'état est conservé, l'UI se reconstruit. <strong>Hot Restart</strong> relance l'app et perd l'état.</dd></div>
+      <div class="g reveal" style="--d:960ms"><dt>Null safety</dt><dd>Le type <code>String?</code> accepte <code>null</code>, le type <code>String</code> non. Actif par défaut depuis Dart 2.12. Le <code>?</code> est obligatoire pour le nullable, <code>!</code> force l'absence de <code>null</code>.</dd></div>
+      <div class="g reveal" style="--d:1020ms"><dt>Future</dt><dd>La promesse de Dart : une valeur qui sera disponible plus tard. <code>await</code> l'attend. <code>async</code>/<code>await</code> remplace les callbacks imbriqués.</dd></div>
+      <div class="g reveal" style="--d:1080ms"><dt>Stream</dt><dd>Une <strong>suite</strong> de données émises dans le temps. <code>StreamBuilder</code> s'y abonne et se reconstruit à chaque émission. Indispensable pour le temps réel.</dd></div>
+      <div class="g reveal" style="--d:1140ms"><dt>Impeller</dt><dd>Le moteur de rendu de Flutter (défaut sur desktop depuis la 3.47). Il compile les <i>shaders</i> pour le GPU et gère les effets. Remplace Skia.</dd></div>
+      <div class="g reveal" style="--d:1200ms"><dt>Isolate</dt><dd>Un fil d'exécution Dart indépendant, sans mémoire partagée. Indispensable pour ne pas bloquer l'UI lors d'un calcul lourd (parsing JSON lourd, cryptographie).</dd></div>
+      <div class="g reveal" style="--d:1260ms"><dt>Rebuild</dt><dd>La reconstruction de l'UI. Flutter ne reconstruit que ce qui a changé : c'est le rôle de l'equality des widgets et des <code>Key</code>. D'où l'importance de <code>const</code>.</dd></div>
+    </dl>
+  </section>
+
+  <!-- ================= 04 — LA CHAÎNE ================= -->
+  <section id="chaine">
+    <div class="sec-head reveal"><span class="num">04</span><h2>La chaîne en 7 étapes</h2></div>
+    <p class="sec-sub reveal">
+      L'ordre compte : le <strong>Dart</strong> d'abord (sans quoi rien ne compile),
+      puis les <strong>widgets</strong>, puis l'<strong>état</strong>, puis le <strong>réseau</strong>.
+      Chaque étape se termine par un jalon que tu dois atteindre avant de passer à la suite.
+    </p>
+
+    <ol class="timeline" id="chain">
+
+      <!-- ÉTAPE 1 -->
+      <li class="reveal">
+        <div class="step">
+          <div class="step-head">
+            <h3>Étape 1 — D'abord le langage Dart</h3>
+            <span class="chip">~30 h</span>
+          </div>
+          <ul class="goals">
+            <li>Variables, types, null safety, <code>final</code> vs <code>const</code>, <code>late</code>.</li>
+            <li>Fonctions, paramètres nommés, fonctions fléchées, closures.</li>
+            <li>Classes, constructeurs, <code>named constructors</code>, héritage, mixins.</li>
+            <li>Listes, maps, <code>final</code>, <code>where</code>, <code>map</code>, <code>fold</code>.</li>
+            <li><code>async</code>/<code>await</code>, <code>Future</code>, <code>Stream</code>, gestion d'erreur (<code>try</code>/<code>catch</code>).</li>
+          </ul>
+          <p class="res-label">Ressources</p>
+          <div class="res">
+            <a href="https://dart.dev/language" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Dart — le langage (officiel)
+            </a>
+            <a href="https://dart.dev/tutorials/dart-first-steps" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Dart — tutoriel interactif
+            </a>
+            <a href="https://www.youtube.com/watch?v=C80JFSdIlAQ" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+              Dart en 10 min — Technovore <span class="tag">FR · 10 min</span>
+            </a>
+            <a href="https://github.com/mohameden19961/dart-zero-to-expert-fr" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              Cours Dart FR complet <span class="tag">GitHub</span>
+            </a>
+          </div>
+          <div class="jalon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <p><strong>Jalon 1 —</strong> un script Dart en ligne de commande qui lit un JSON, le transforme et affiche un résultat. Tu écris des classes avec des constructeurs nommés sans hésiter.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ÉTAPE 2 -->
+      <li class="reveal">
+        <div class="step">
+          <div class="step-head">
+            <h3>Étape 2 — L'environnement et les premiers widgets</h3>
+            <span class="chip">~15 h</span>
+          </div>
+          <ul class="goals">
+            <li>Installer Flutter SDK + un IDE (VS Code, Android Studio, IntelliJ).</li>
+            <li><code>flutter doctor</code> pour vérifier que tout est bon.</li>
+            <li>Comprendre la structure d'un projet : <code>lib/</code>, <code>pubspec.yaml</code>, <code>android/</code>, <code>ios/</code>.</li>
+            <li>Écrire ses premiers widgets : <code>Text</code>, <code>Container</code>, <code>Column</code>, <code>Row</code>, <code>Stack</code>.</li>
+            <li>Lire <code>pubspec.yaml</code> et ajouter un package avec <code>flutter pub add</code>.</li>
+          </ul>
+          <p class="res-label">Ressources</p>
+          <div class="res">
+            <a href="https://docs.flutter.dev/get-started/install" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Installation (officiel)
+            </a>
+            <a href="https://docs.flutter.dev/get-started/welcome" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Premier projet
+            </a>
+            <a href="https://www.youtube.com/watch?v=IK_oPkmQFSw" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+              App mobile de A à Z — Ralph Développeur <span class="tag">FR · 15 min</span>
+            </a>
+            <a href="https://docs.flutter.dev/codelabs" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Codelabs interactifs (officiel)
+            </a>
+          </div>
+          <div class="jalon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <p><strong>Jalon 2 —</strong> une app qui s'affiche sur <strong>Android, iOS et le web</strong> avec le même code, et qui tourne en <code>flutter run -d chrome</code> sans configuration.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ÉTAPE 3 -->
+      <li class="reveal">
+        <div class="step">
+          <div class="step-head">
+            <h3>Étape 3 — La mise en page et la navigation</h3>
+            <span class="chip">~25 h</span>
+          </div>
+          <ul class="goals">
+            <li>Comprendre <strong>Row vs Column</strong>, <code>Expanded</code>, <code>Flexible</code>, <code>Stack</code>, <code>Wrap</code>.</li>
+            <li>Maîtriser les <strong>constraints</strong> : c'est LA source de 80 % des bugs de mise en page.</li>
+            <li>Listes : <code>ListView.builder</code>, <code>GridView</code>, <code>SliverList</code>, séparation avec <code>ListView.separated</code>.</li>
+            <li>Navigation : <code>Navigator.push</code>, routes nommées, passage d'arguments, retour de résultat.</li>
+            <li>Formulaires : <code>TextFormField</code>, <code>Form</code>, validation, <code>GlobalKey&lt;FormState&gt;</code>.</li>
+          </ul>
+          <p class="res-label">Ressources</p>
+          <div class="res">
+            <a href="https://docs.flutter.dev/ui/layout" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Layout — la référence
+            </a>
+            <a href="https://www.youtube.com/watch?v=yY_d7UtpRvE" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+              ListView + navigation — Technovore <span class="tag">FR · 17 min</span>
+            </a>
+            <a href="https://docs.flutter.dev/cookbook/navigation" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Cookbook — navigation
+            </a>
+            <a href="https://docs.flutter.dev/cookbook/forms/validation" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Cookbook — validation de formulaires
+            </a>
+          </div>
+          <div class="jalon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <p><strong>Jalon 3 —</strong> une app à 3 écrans avec navigation, une liste de 100 éléments qui scroll fluide, et un formulaire validé. Tu sais expliquer un <i>overflow</i> sans chercher sur Google.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ÉTAPE 4 -->
+      <li class="reveal">
+        <div class="step">
+          <div class="step-head">
+            <h3>Étape 4 — L'état : le cœur de Flutter</h3>
+            <span class="chip">~30 h</span>
+          </div>
+          <ul class="goals">
+            <li>Comprendre <code>setState</code>, <code>initState</code>, <code>didChangeDependencies</code>, <code>dispose</code>.</li>
+            <li>Le <strong>cycle de vie</strong> d'un <code>State</code> — et pourquoi <code>dispose()</code> n'est pas optionnel.</li>
+            <li>Passer de <code>setState</code> à <code>ChangeNotifier</code> + <code>provider</code>.</li>
+            <li>Choisir son approche : <strong>Riverpod</strong> ou <strong>BLoC</strong> (voir le comparatif plus bas).</li>
+            <li>Extraire la logique métier hors des widgets (pattern <i>ViewModel</i>).</li>
+          </ul>
+          <p class="res-label">Ressources</p>
+          <div class="res">
+            <a href="https://docs.flutter.dev/data-and-backend/state-mgmt/simple" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              État simple (officiel)
+            </a>
+            <a href="https://riverpod.dev/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Riverpod — documentation
+            </a>
+            <a href="https://bloclibrary.dev/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              BLoC — documentation
+            </a>
+            <a href="https://docs.flutter.dev/app-architecture/ui-layer" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Architecture — la couche UI (officiel)
+            </a>
+          </div>
+          <div class="jalon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <p><strong>Jalon 4 —</strong> ton compteur, ton panier ou ton thème fonctionnent avec un gestionnaire d'état, <strong>pas</strong> avec des <code>setState</code> éparpillés. Tu sais expliquer le flux de données dans ta tête.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ÉTAPE 5 -->
+      <li class="reveal">
+        <div class="step">
+          <div class="step-head">
+            <h3>Étape 5 — Les données : réseau et stockage</h3>
+            <span class="chip">~30 h</span>
+          </div>
+          <ul class="goals">
+            <li>Appeler une API REST avec <code>http</code> ou <code>dio</code>, gérer loading / success / error.</li>
+            <li>Modéliser les données avec <code>fromJson</code> / <code>toJson</code> et <code>json_serializable</code>.</li>
+            <li>Stocker localement : <code>shared_preferences</code> (clé/valeur), <code>sqflite</code> (SQLite), <code>hive</code>, <code>drift</code>.</li>
+            <li>Injection de dépendances pour tester : le réseau est.mockable.</li>
+            <li>Gérer l'<strong>auth</strong> : token stocké, intercepteur qui l'ajoute à chaque requête, refresh.</li>
+          </ul>
+          <p class="res-label">Ressources</p>
+          <div class="res">
+            <a href="https://docs.flutter.dev/data-and-backend/fetch-data" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Appeler une API (officiel)
+            </a>
+            <a href="https://pub.dev/packages/dio" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Dio — client HTTP
+            </a>
+            <a href="https://pub.dev/packages/retrofit" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Retrofit — API typée
+            </a>
+            <a href="https://pub.dev/packages/sqflite" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Sqflite — SQLite
+            </a>
+          </div>
+          <div class="jalon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <p><strong>Jalon 5 —</strong> ton app affiche une liste de données venant d'une vraie API, avec un état de chargement, une gestion d'erreur propre et un cache local qui fonctionne hors ligne.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ÉTAPE 6 -->
+      <li class="reveal">
+        <div class="step">
+          <div class="step-head">
+            <h3>Étape 6 — La qualité : tests et performance</h3>
+            <span class="chip">~20 h</span>
+          </div>
+          <ul class="goals">
+            <li>Tests <strong>unitaires</strong> (logique métier), <strong>widget</strong> (rendu) et <strong>golden</strong> (pixel par pixel).</li>
+            <li>Mesurer avec le <strong>DevTools</strong> : arbre des widgets, timeline du rendu, profile mémoire.</li>
+            <li>Optimiser : <code>const</code> sur les widgets statiques, <code>ListView.builder</code>, éviter les rebuilds inutiles.</li>
+            <li>Travailler les <strong>animations</strong> : implicites, <code>AnimationController</code>, <code>Hero</code>.</li>
+            <li>Accessibilité : <code>Semantics</code>, contrastes, cibles tactiles.</li>
+          </ul>
+          <p class="res-label">Ressources</p>
+          <div class="res">
+            <a href="https://docs.flutter.dev/testing/overview" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Tests (officiel)
+            </a>
+            <a href="https://docs.flutter.dev/performance/best-practices" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Bonnes pratiques perf
+            </a>
+            <a href="https://docs.flutter.dev/ui/animations" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Animations (officiel)
+            </a>
+            <a href="https://docs.flutter.dev/tools/devtools" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              DevTools
+            </a>
+          </div>
+          <div class="jalon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <p><strong>Jalon 6 —</strong> un <code>flutter test</code> qui passe au vert, un profil DevTools qui montre 60 fps constants, et une animation <code>Hero</code> entre deux écrans.</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ÉTAPE 7 -->
+      <li class="reveal">
+        <div class="step">
+          <div class="step-head">
+            <h3>Étape 7 — Architecture et mise en production</h3>
+            <span class="chip">~25 h</span>
+          </div>
+          <ul class="goals">
+            <li>Structurer en couches : <strong>presentation</strong> / <strong>domain</strong> / <strong>data</strong>.</li>
+            <li>Séparer la logique métier des widgets — la règle qui fait tenir une app à 50 000 lignes.</li>
+            <li>Gestion de la taille d'écran, du mode sombre, de l'internationalisation.</li>
+            <li>Build de production : <code>flutter build apk</code>, <code>appbundle</code>, <code>ipa</code>, <code>web</code>.</li>
+            <li>CI/CD, signature, stores (Play Store, App Store).</li>
+          </ul>
+          <p class="res-label">Ressources</p>
+          <div class="res">
+            <a href="https://docs.flutter.dev/app-architecture" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Architecture d'app (officiel)
+            </a>
+            <a href="https://docs.flutter.dev/deployment" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Déploiement (officiel)
+            </a>
+            <a href="https://docs.flutter.dev/release/build-mode" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+              Modes de build
+            </a>
+            <a href="https://github.com/mohameden19961/flutter-cours-complet-fr" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              Cours Flutter FR — 12 chapitres <span class="tag">GitHub</span>
+            </a>
+          </div>
+          <div class="jalon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <p><strong>Jalon 7 —</strong> une app publiée sur le Play Store (ou prête à l'être), avec une architecture en couches, des tests, et un <code>README</code> qui explique comment la lancer.</p>
+          </div>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- ================= 05 — DART OU FLUTTER ? ================= -->
+  <section id="dart-ou-flutter">
+    <div class="sec-head reveal"><span class="num">05</span><h2>Dart d'abord, ou Flutter d'abord ?</h2></div>
+    <p class="sec-sub reveal">
+      La question revient systématiquement. Voici la réponse honnête, selon ton profil.
+    </p>
+
+    <div class="decision">
+      <div class="dec reveal">
+        <h3>Tu débutes en programmation</h3>
+        <p>Commence par <strong>Dart seul</strong>. Un seul langage à appris, sans framework, sans widget, sans moteur de rendu.</p>
+        <ul>
+          <li>1 à 2 semaines sur les fondamentaux du langage</li>
+          <li>Pas de « pourquoi mon widget ne s'affiche pas ? »</li>
+          <li>Tu arrives sur Flutter avec du confort, pas avec du doute</li>
+        </ul>
+      </div>
+      <div class="dec reveal" style="--d:80ms">
+        <h3>Tu connais déjà un langage moderne</h3>
+        <p>Tu peux aller <strong>directement sur Flutter</strong> et apprendre le Dart en chemin. C'est ce que recommande le parcours officiel.</p>
+        <ul>
+          <li>Le « Dart Getting Started » est facultatif dans ce cas</li>
+          <li>La syntaxe se lit comme du Kotlin, du TypeScript ou du Swift</li>
+          <li>Mieux vaut voir le résultat tout de suite</li>
+        </ul>
+      </div>
+      <div class="dec warm reveal" style="--d:160ms">
+        <h3>Tu viens du web / React</h3>
+        <p>Le <strong>piège classique</strong> : tu veux tout faire en <code>StatelessWidget</code> + <code>setState</code>, comme du React.</p>
+        <ul>
+          <li>Flutter est <strong>impératif</strong> : on construit une hiérarchie de widgets</li>
+          <li>Le state est une <i>donnée</i>, pas un <code>useState</code></li>
+          <li>Prends le temps de l'étape 4 (état), c'est là que ça se joue</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p><strong>Le parcours officiel Flutter</strong> (<a href="https://docs.flutter.dev/learn/pathway" target="_blank" rel="noopener">docs.flutter.dev/learn/pathway</a>)
+      est exactement structuré en trois temps : environnement → tuto Dart → tuto Flutter.
+      C'est la référence officielle, gratuite, et elle suit ce découpage. Si tu veux une seule
+      source à suivre, c'est celle-ci.</p>
+    </div>
+  </section>
+
+  <!-- ================= 06 — GESTION D'ÉTAT ================= -->
+  <section id="gestion-etat">
+    <div class="sec-head reveal"><span class="num">06</span><h2>Choisir son gestionnaire d'état</h2></div>
+    <p class="sec-sub reveal">
+      En 2026, trois solutions dominent. Le mauvais choix te coûte des semaines ; voici comment choisir.
+    </p>
+
+    <div class="tbl-wrap reveal">
+      <table>
+        <thead>
+          <tr><th>Critère</th><th>Provider</th><th>Riverpod</th><th>BLoC</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Version stable 2026</td><td>6.1.5</td><td>3.3.1</td><td>9.1.1</td></tr>
+          <tr><td>Sécurité à la compilation</td><td>Non (échec à l'exécution)</td><td><strong>Oui</strong></td><td><strong>Oui</strong></td></tr>
+          <tr><td>Lecture hors du widget tree</td><td>Non</td><td><strong>Oui</strong></td><td>Limité</td></tr>
+          <tr><td>Injection de dépendances</td><td>Oui (simple)</td><td><strong>Intégrée</strong></td><td>Non (package séparé)</td></tr>
+          <tr><td>Flux event → state</td><td>Non</td><td>Partiellement</td><td><strong>Oui (strict)</strong></tr>
+          <tr><td>Historique du state traçable</td><td>Non</td><td>Limité</td><td><strong>Oui</strong></td>
+          <tr><td>Courbe d'apprentissage</td><td><strong>Très douce</strong></td><td>Moyenne</td><td>Plus raide</td></tr>
+          <tr><td>Verdict 2026</td><td>Projets existing, legacy, pédagogie</td><td><strong>Nouveau projet, la plupart des cas</strong></td><td>Grande équipe, logique complexe, audit requis</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p><strong>Mon conseil :</strong> apprend <code>ChangeNotifier</code> + <code>provider</code> d'abord
+      (c'est la base de Riverpod, et ça se lit dans le SDK Flutter). Ensuite passe à
+      <strong>Riverpod</strong> pour tes vrais projets. Ne commence pas par BLoC : le ceremony
+      <i>Event → Bloc → State</i> est un vrai coût d'apprentissage, et il ne se justifie
+      que sur une grosse équipe avec des besoins d'audit.</p>
+    </div>
+  </section>
+
+  <!-- ================= 07 — PROJETS ================= -->
+  <section id="projets">
+    <div class="sec-head reveal"><span class="num">07</span><h2>Les projets fil rouge</h2></div>
+    <p class="sec-sub reveal">
+      Un seul projet que tu fais grossir, étape par étape. C'est ce qui fait retenir —
+      pas une nouvelle app à chaque tutoriel.
+    </p>
+
+    <div class="proj">
+      <div class="proj-card reveal">
+        <span class="n">Étapes 1 – 2</span>
+        <h4>Compteur &amp; fiche produit</h4>
+        <p>Premier <code>StatefulWidget</code>, premier <code>setState</code>, premier <code>const</code>. Tu poses les bases.</p>
+      </div>
+      <div class="proj-card reveal" style="--d:60ms">
+        <span class="n">Étape 3</span>
+        <h4>Catalogue de produits</h4>
+        <p><code>ListView.builder</code>, <code>GridView</code>, page détail avec arguments de route.</p>
+      </div>
+      <div class="proj-card reveal" style="--d:120ms">
+        <span class="n">Étape 4</span>
+        <h4>Panier d'achat</h4>
+        <p>Le state devient complexe : tu passes à <strong>Riverpod</strong> et tu compares avec BLoC.</p>
+      </div>
+      <div class="proj-card reveal" style="--d:180ms">
+        <span class="n">Étape 5</span>
+        <h4>Connexion à une vraie API</h4>
+        <p>Token, intercepteur Dio, cache <code>shared_preferences</code>, états loading / error.</p>
+      </div>
+      <div class="proj-card reveal" style="--d:240ms">
+        <span class="n">Étape 6</span>
+        <h4>Animations &amp; tests</h4>
+        <p>Transition <code>Hero</code>, animation implicite, tests widget et golden.</p>
+      </div>
+      <div class="proj-card reveal" style="--d:300ms">
+        <span class="n">Étape 7</span>
+        <h4>Release</h4>
+        <p>Architecture en couches, <code>flutter build appbundle</code>, publication.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 — PIÈGES ================= -->
+  <section id="pieges">
+    <div class="sec-head reveal"><span class="num">08</span><h2>Les six pièges du débutant</h2></div>
+    <p class="sec-sub reveal">Ce sont les erreurs qui reviennent le plus souvent — et qui coûtent le plus de temps.</p>
+
+    <div class="pit-grid">
+      <div class="pit reveal">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4M12 17h.01"/></svg> Modifier une variable sans rebuild</h4>
+        <p>Changer <code>count = 5</code> ne change rien à l'écran. Un widget est immuable : il faut <code>setState()</code>.</p>
+      </div>
+      <div class="pit reveal" style="--d:60ms">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4M12 17h.01"/></svg> Oublier <code>dispose()</code></h4>
+        <p>Un <code>Timer</code>, un <code>StreamSubscription</code> ou un <code>ScrollController</code> non libérés fuient et plantent à la fermeture.</p>
+      </div>
+      <div class="pit reveal" style="--d:120ms">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4M12 17h.01"/></svg> <code>ListView(children: [...])</code> avec 10 000 items</h4>
+        <p>Tout est construit d'un coup → freeze et pic mémoire. Utilise <code>ListView.builder</code>, qui construit à la demande.</p>
+      </div>
+      <div class="pit reveal" style="--d:180ms">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4M12 17h.01"/></svg> <code>const</code> oublié</h4>
+        <p>Sans <code>const</code>, Flutter ne peut pas savoir que le widget n'a pas changé et le reconstruit inutilement.</p>
+      </div>
+      <div class="pit reveal" style="--d:240ms">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4M12 17h.01"/></svg> Logique métier dans le widget</h4>
+        <p>Un <code>build()</code> de 200 lignes est un <code>build()</code> qui ne se testera jamais. Extraire dans un ViewModel.</p>
+      </div>
+      <div class="pit reveal" style="--d:300ms">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4M12 17h.01"/></svg> Attendre le réseau dans <code>build()</code></h4>
+        <p>Un <code>FutureBuilder</code> lancé dans <code>build()</code> relance une requête à chaque reconstruction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ANNEXES ================= -->
+  <section id="memo">
+    <div class="sec-head reveal"><span class="num">09</span><h2>Mémo des commandes</h2></div>
+    <p class="sec-sub reveal">La CLI Flutter, en un coup d'œil.</p>
+
+    <div class="card reveal">
+      <pre class="pre"><span class="c"># Créer et lancer un projet</span>
+flutter create <span class="t">mon_app</span>
+cd mon_app
+flutter run                  <span class="c"># sur l'appareil / émulateur par défaut</span>
+flutter run -d chrome        <span class="c"># dans le navigateur (le plus rapide pour débuter)</span>
+flutter run -d windows       <span class="c"># sur le bureau</span>
+flutter run --release
+
+<span class="c"># Ajouter / retirer des paquets</span>
+flutter pub add dio
+flutter pub add --dev flutter_lints
+flutter pub get             <span class="c"># installé les dépendances</span>
+flutter pub outdated
+flutter pub upgrade --major-upgrades
+
+<span class="c"># Qualité</span>
+flutter analyze              <span class="c"># linter intégré</span>
+flutter test                <span class="c"># tests unitaires + widget</span>
+flutter test --coverage
+dart format .
+
+<span class="c"># Build de production</span>
+flutter build apk            <span class="c"># APK Android</span>
+flutter build appbundle      <span class="c"># AAB pour le Play Store</span>
+flutter build ipa            <span class="c"># iOS (nécessite macOS + Xcode)</span>
+flutter build web
+flutter build windows
+
+<span class="c"># Divers</span>
+flutter doctor               <span class="c"># vérifie l'environnement</span>
+flutter devices              <span class="c"># liste les cibles disponibles</span>
+flutter clean               <span class="c"># nettoie les artefacts de build</span>
+flutter --version</pre>
+    </div>
+
+    <div class="card reveal" style="margin-top:18px">
+      <dl class="kv">
+        <dt>Structure lib/</dt>
+        <dd><code>lib/main.dart</code> (point d'entrée) · <code>lib/models/</code> · <code>lib/views/</code> · <code>lib/widgets/</code> · <code>lib/services/</code> · <code>lib/providers/</code></dd>
+        <dt>pubspec.yaml</dt>
+        <dd>Le manifeste : nom, version, assets, dépendances. <code>flutter pub add</code> l'édite tout seul — ne le modifie pas à la main pendant que le build tourne.</dd>
+        <dt>Assets</dt>
+        <dd>Déclarés dans <code>pubspec.yaml</code> sous <code>flutter: assets:</code>, puis chargés avec <code>rootBundle</code> ou <code>Image.asset</code></dd>
+        <dt>Android / iOS</dt>
+        <dd>Les dossiers <code>android/</code> et <code>ios/</code> contiennent la config native (permissions, nom de l'app, signature). On y touche rarement.</dd>
+        <dt>Plateformes</dt>
+        <dd><code>flutter create --platforms web,android</code> pour ne générer que celles qui te servent</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="sec-head reveal"><span class="num">10</span><h2>Checklist de validation</h2></div>
+    <p class="sec-sub reveal">Coche ces cases : si elles sont toutes cochées, tu es prêt pour un poste Flutter.</p>
+
+    <div class="card reveal">
+      <ul class="goals" style="gap:11px">
+        <li>Je peux expliquer la différence entre <strong>Widget</strong>, <strong>State</strong> et <strong>Element</strong> sans hésiter.</li>
+        <li>Je sais pourquoi <code>setState()</code> est nécessaire, et où il ne l'est pas.</li>
+        <li>Je sais expliquer un <code>RenderFlex overflowed</code> et le corriger.</li>
+        <li>Je sais dire quand utiliser <code>Row</code> et quand <code>Column</code>, et pourquoi ça déborde.</li>
+        <li>Je sais passer des données entre deux écrans et en récupérer au retour.</li>
+        <li>Je sais valider un formulaire et afficher les erreurs champ par champ.</li>
+        <li>J'ai utilisé un gestionnaire d'état autre que <code>setState</code> seul.</li>
+        <li>Je sais expliquer la différence entre Provider, Riverpod et BLoC, et choisir.</li>
+        <li>Je sais appeler une API et gérer les états loading / success / error.</li>
+        <li>Je sais stocker une donnée localement et la relire au démarrage.</li>
+        <li>Je libère mes ressources dans <code>dispose()</code>.</li>
+        <li>J'ai écrit au moins un test unitaire et un test widget.</li>
+        <li>Je sais utiliser <code>ListView.builder</code> et expliquer pourquoi il ne freeze pas.</li>
+        <li>Je sais construire un <code>appbundle</code> et le préparer pour le Play Store.</li>
+        <li>Je sais organiser mon code en couches (UI / domaine / données).</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Sources vérifiées</strong> — docs.flutter.dev (documentation officielle, reflète la version 3.47),
+    dart.dev (langage et blogs de version), flutterreleases.com (historique des versions),
+    pub.dev (registre de paquets), riverpod.dev et bloclibrary.dev (documentations des gestionnaires d'état).
+    <ul>
+      <li>Version de référence : <strong>Flutter 3.47.8</strong> (stable, 23 octobre 2026) embarquant <strong>Dart 3.13.7</strong>.</li>
+      <li>Prochaines versions prévues : Flutter 3.50 (novembre 2026), puis la série Dart 3.14.</li>
+      <li>Les playlists YouTube peuvent être déplacées par leur auteur — le lien de la playlist reste le point d'entrée fiable.</li>
+      <li>Les versions des paquets citées (Provider 6.1.5, Riverpod 3.3.1, flutter_bloc 9.1.1) sont celles relevées en octobre 2026.</li>
+    </ul>
+  </footer>
+
+</div>
+
+<button id="top" type="button" aria-label="Retour en haut">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function () {
+  var doc = document.documentElement;
+
+  /* ---------- Reveal au scroll ---------- */
+  var items = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  var chain = document.getElementById('chain');
+
+  function showAll() {
+    items.forEach(function (el) { el.classList.add('in'); });
+    if (chain) chain.classList.add('in');
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    showAll();
+    return;
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+
+  items.forEach(function (el) { io.observe(el); });
+
+  /* le rail de la timeline se dessine quand la liste entre dans l'écran */
+  if (chain) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); cio.unobserve(entry.target); }
+      });
+    }, { threshold: 0.05 });
+    cio.observe(chain);
+  }
+
+  /* filet de sécurité : si l'observateur n'a pas tout déclenché en 4 s, on montre tout */
+  setTimeout(showAll, 4000);
+
+  /* ---------- Barre de progression ---------- */
+  var bar = document.querySelector('#progress i');
+  var top = document.getElementById('top');
+
+  function onScroll() {
+    var h = doc.scrollHeight - window.innerHeight;
+    var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    if (bar) bar.style.width = Math.min(100, Math.max(0, p)) + '%';
+    if (top) top.classList.toggle('show', window.scrollY > 600);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  if (top) {
+    top.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /* ---------- Défilement doux vers les ancres ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href');
+      if (!id || id === '#') return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', id);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
